@@ -1,0 +1,38 @@
+{
+  "name": "abi2ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && npm run build-css",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
+    "build-css": "npx tailwindcss -o dist/style.css && postcss dist/style.css -o dist/style.min.css",
+    "formatReadme": "prettier README.md --prose-wrap always --print-width 78 -w"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tailwindcss/typography": "^0.5.15",
+    "@tsconfig/svelte": "^5.0.4",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.6",
+    "daisyui": "^4.12.23",
+    "postcss": "^8.4.45",
+    "postcss-cli": "^11.0.0",
+    "svelte": "^5.15.0",
+    "svelte-check": "^4.1.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.5",
+    "vite-plugin-top-level-await": "^1.4.4",
+    "vite-plugin-wasm": "^3.4.1"
+  },
+  "dependencies": {
+    "@okcontract/cells": "^0.3.3",
+    "@okcontract/fred": "^0.1.1",
+    "@okcontract/multichain": "^0.1.2",
+    "@okcontract/sdk": "^0.1.1",
+    "@okcontract/uic": "^0.1.3"
+  }
+}
