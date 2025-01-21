@@ -45,7 +45,7 @@
   Error at $func {$func}
 {:else if $func?.stateMutability === "view"}
   Read-only
-  <Value item={$readOutput} />
+  <Value {instance} item={$readOutput} />
 {:else if !($slippage instanceof Error)}
   {#if $slippage <= lowSlippage || $slippage >= highSlippage}
     <div class="absolute bottom-0 left-0 right-0 z-30">
