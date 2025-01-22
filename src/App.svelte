@@ -17,36 +17,56 @@
 
   const page = new OKPage(core);
   const proxy = page.proxy;
-  const query = proxy.new("con:velodrome/router_optimism" as ContractQueryType);
+  const query = proxy.new("tok:op" as ContractQueryType);
   const chain = proxy.new(optimism.id);
   const contract = new OKContract(page, query, chain);
+
+  const addr = contract.address;
 
   const chains = core.Chains;
   const walletAccount = core.WantedWalletAccount;
 </script>
 
 <main class="container mx-auto">
-  <div class="mt-4 navbar bg-base-200 gap-2 rounded-box px-4">
-    <img src={OkLogo} class="h-10 w-10" alt="OKcontract Logo" />
-    <span class="text-xl font-semibold">OKcontract ABI2UI</span>
+  <div class="mt-4 navbar bg-base-200 rounded-box px-4">
+    <div class="flex flex-1 md:gap-1 lg:gap-2">
+      <img src={OkLogo} class="h-10 w-10" alt="OKcontract Logo" />
+      <span class="text-xl font-semibold">OKcontract ABI2UI</span>
+    </div>
+    <div class="flex-0">
+      {#if $walletAccount}
+        {$walletAccount}
+      {:else}
+        <Button
+          style="neutral"
+          label="Connect Wallet"
+          asyncAction={() => core.Connect()}
+        />
+      {/if}
+    </div>
   </div>
-  <div class="p-4 prose w-full">
-    <h1>ABI2UI</h1>
+  <div class="p-4 w-full">
+    <h1 class="text-2xl font-semibold mb-2">ABI2UI</h1>
     <p>
       This is a demo of compiler that automatically generates user-friendly
       inputs from the contracts ABI definitions.
     </p>
   </div>
 
-  {#if $walletAccount}
-    {$walletAccount}
-  {:else}
-    <Button style="accent" label="Connect Wallet" action={core.Connect} />
-  {/if}
-
-  <div class="mb-4 card bordered">
+  <div>
     {#if $chains}
-      <AbiView instance={page} {contract} {query} />
+      {#if $addr && !($addr instanceof Error)}
+        <div class="p-4 w-full">
+          <p>
+            <span class="font-semibold">Contract address:</span>
+            {$addr.addr.toString()}
+          </p>
+          <p><span class="font-semibold">Chain:</span> {$addr.chain}</p>
+        </div>
+      {/if}
+      <div class="mb-4 card bordered">
+        <AbiView instance={page} {contract} {query} />
+      </div>
     {/if}
   </div>
 
@@ -80,9 +100,3 @@
     </aside>
   </footer>
 </main>
-
-<style>
-  h4 {
-    font-weight: bold;
-  }
-</style>
