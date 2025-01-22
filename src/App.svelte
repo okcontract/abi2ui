@@ -21,6 +21,8 @@
   const chain = proxy.new(optimism.id);
   const contract = new OKContract(page, query, chain);
 
+  const addr = contract.address;
+
   const chains = core.Chains;
   const walletAccount = core.WantedWalletAccount;
 </script>
@@ -39,18 +41,28 @@
       {/if}
     </div>
   </div>
-  <div class="p-4 prose w-full">
-    <h1>ABI2UI</h1>
+  <div class="p-4 w-full">
+    <h1 class="text-2xl font-semibold mb-2">ABI2UI</h1>
     <p>
       This is a demo of compiler that automatically generates user-friendly
       inputs from the contracts ABI definitions.
     </p>
   </div>
 
-
-  <div class="mb-4 card bordered">
+  <div>
     {#if $chains}
-      <AbiView instance={page} {contract} {query} />
+      {#if $addr && !($addr instanceof Error)}
+        <div class="p-4 w-full">
+          <p>
+            <span class="font-semibold">Contract address:</span>
+            {$addr.addr.toString()}
+          </p>
+          <p><span class="font-semibold">Chain:</span> {$addr.chain}</p>
+        </div>
+      {/if}
+      <div class="mb-4 card bordered">
+        <AbiView instance={page} {contract} {query} />
+      </div>
     {/if}
   </div>
 
@@ -84,9 +96,3 @@
     </aside>
   </footer>
 </main>
-
-<style>
-  h4 {
-    font-weight: bold;
-  }
-</style>
