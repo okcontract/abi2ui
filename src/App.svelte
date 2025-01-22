@@ -26,9 +26,18 @@
 </script>
 
 <main class="container mx-auto">
-  <div class="mt-4 navbar bg-base-200 gap-2 rounded-box px-4">
-    <img src={OkLogo} class="h-10 w-10" alt="OKcontract Logo" />
-    <span class="text-xl font-semibold">OKcontract ABI2UI</span>
+  <div class="mt-4 navbar bg-base-200 rounded-box px-4">
+    <div class="flex flex-1 md:gap-1 lg:gap-2">
+      <img src={OkLogo} class="h-10 w-10" alt="OKcontract Logo" />
+      <span class="text-xl font-semibold">OKcontract ABI2UI</span>
+    </div>
+    <div class="flex-0">
+      {#if $walletAccount}
+        {$walletAccount}
+      {:else}
+        <Button style="neutral" label="Connect Wallet" action={core.Connect} />
+      {/if}
+    </div>
   </div>
   <div class="p-4 prose w-full">
     <h1>ABI2UI</h1>
@@ -38,11 +47,6 @@
     </p>
   </div>
 
-  {#if $walletAccount}
-    {$walletAccount}
-  {:else}
-    <Button style="accent" label="Connect Wallet" action={core.Connect} />
-  {/if}
 
   <div class="mb-4 card bordered">
     {#if $chains}
