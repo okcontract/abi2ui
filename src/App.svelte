@@ -23,6 +23,9 @@
 
   const chains = core.Chains;
   const walletAccount = core.WantedWalletAccount;
+
+  let input: ContractQueryType;
+  $: input = $query;
 </script>
 
 <main class="container mx-auto">
@@ -44,9 +47,18 @@
     <Button style="accent" label="Connect Wallet" action={core.Connect} />
   {/if}
 
+  <input bind:value={input} />
+  <button
+    on:click={() => {
+      query.set(input);
+    }}>Go</button
+  >
+
   <div class="mb-4 card bordered">
     {#if $chains}
-      <AbiView instance={page} {contract} {query} />
+      {#key $query}
+        <AbiView instance={new OKPage(core)} {contract} {query} />
+      {/key}
     {/if}
   </div>
 
