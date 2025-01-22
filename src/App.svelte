@@ -17,7 +17,7 @@
 
   const page = new OKPage(core);
   const proxy = page.proxy;
-  const query = proxy.new("con:velodrome/router_optimism" as ContractQueryType);
+  const query = proxy.new("tok:op" as ContractQueryType);
   const chain = proxy.new(optimism.id);
   const contract = new OKContract(page, query, chain);
 
