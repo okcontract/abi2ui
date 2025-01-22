@@ -37,7 +37,11 @@
       {#if $walletAccount}
         {$walletAccount}
       {:else}
-        <Button style="neutral" label="Connect Wallet" action={core.Connect} />
+        <Button
+          style="neutral"
+          label="Connect Wallet"
+          asyncAction={() => core.Connect()}
+        />
       {/if}
     </div>
   </div>
