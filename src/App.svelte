@@ -58,14 +58,22 @@
 
   <div>
     {#if $chains}
+      <label class="form-control w-full max-w-xs px-4">
+        <div class="label">
+          <span class="label-text">Contract address</span>
+        </div>
+        <div class="flex gap-2 items-center">
+          <input bind:value={input} class="input input-bordered" />
+          <button
+            class="btn btn-md"
+            on:click={() => {
+              query.set(input);
+            }}>Go</button
+          >
+        </div>
+      </label>
       {#if $addr && !($addr instanceof Error)}
         <div class="p-4 w-full">
-         <input bind:value={input} />
-  <button
-    on:click={() => {
-      query.set(input);
-    }}>Go</button
-  >
           <p>
             <span class="font-semibold">Contract address:</span>
             {$addr.addr.toString()}
