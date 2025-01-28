@@ -15,8 +15,7 @@ This application is built with [Svelte](https://svelte.dev/).
 
 ```sh
 npm i
-npm run build
-npm run preview
+npm run dev
 ```
 
 ## Changing contract
