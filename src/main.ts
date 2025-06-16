@@ -5,7 +5,7 @@ import { type AppID, OKCore, baseOptions } from "@okcontract/sdk";
 import App from "./App.svelte";
 import "./assets/app.css";
 
-const id = "abi2ui" as AppID;
+const id = "pilot" as AppID;
 const options = {
 	...baseOptions(id),
 };

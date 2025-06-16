@@ -1,119 +1,85 @@
 <script lang="ts">
-  import { optimism } from "@okcontract/multichain";
-  import {
-    OKContract,
-    OKCore,
-    OKPage,
-    type ContractQueryType,
-  } from "@okcontract/sdk";
-  import { Button } from "@okcontract/uic";
+  import { OKCore } from "@okcontract/sdk";
 
-  import GithubLogo from "./assets/github-logo.svg";
+  import BgImg from "./assets/bg-popart.png";
   import OkLogo from "./assets/okcontract-logo.svg";
-
-  import AbiView from "./lib/ABIView.svelte";
-
   export let core: OKCore;
-
-  const page = new OKPage(core);
-  const proxy = page.proxy;
-  const query = proxy.new("tok:op" as ContractQueryType);
-  const chain = proxy.new(optimism.id);
-  const contract = new OKContract(page, query, chain);
-
-  const addr = contract.address;
-
-  const chains = core.Chains;
   const walletAccount = core.WantedWalletAccount;
-
-  let input: ContractQueryType;
-  $: input = $query;
 </script>
 
-<main class="container mx-auto">
-  <div class="mt-4 navbar bg-base-200 rounded-box px-4">
+<div>
+  <nav
+    class="navbar flex justify-between w-full md:gap-1 lg:gap-2 sticky top-0 left-0 right-0 h-16 px-4 bg-base-200 text-base-content bg-opacity-90 backdrop-blur z-30"
+  >
     <div class="flex flex-1 md:gap-1 lg:gap-2">
       <img src={OkLogo} class="h-10 w-10" alt="OKcontract Logo" />
-      <span class="text-xl font-semibold">OKcontract ABI2UI</span>
+      <span class="text-xl font-semibold">Pilot</span>
     </div>
-    <div class="flex-0">
+    <nav class="menu menu-horizontal gap-3">
+      <li><a>About</a></li>
+      <li><a>Chat</a></li>
+      <li><a>Leaderboard</a></li>
+    </nav>
+    <div class="flex">
       {#if $walletAccount}
         {$walletAccount}
       {:else}
-        <Button
-          style="neutral"
-          label="Connect Wallet"
-          asyncAction={() => core.Connect()}
-        />
+        <button class="btn btn-md bg-accent text-neutral-content rounded-full"
+          >Connect wallet</button
+        >
       {/if}
     </div>
-  </div>
-  <div class="p-4 w-full">
-    <h1 class="text-2xl font-semibold mb-2">ABI2UI</h1>
-    <p>
-      This is a demo of compiler that automatically generates user-friendly
-      inputs from the contracts ABI definitions.
-    </p>
-  </div>
+  </nav>
+  <main class="min-h-screen justify-center w-full">
+    <div class="relative w-full">
+      <picture class="absolute top-0 left-0 h-full right-0">
+        <img class="block w-full" src={BgImg} alt="bg" />
+      </picture>
+      <div class="p-8 max-w-3xl mx-auto">
+        <div
+          class="card bg-base-100 text-base-content p-8 grid gap-3 border-2 border-neutral"
+        >
+          <h6 class="uppercase">Step 1</h6>
+          <h1 class="text-5xl font-semibold mb-2">
+            <img class="block w-full" src="./assets/shape-001.svg" alt="" />
+            Why Otopilot?
+          </h1>
+          <h2 class="mb-3 text-3xl font-semibold">
+            DeFi offers yields, but interacting with protocols is hard
+          </h2>
+          <ul class="list-disc ml-6 mb-6">
+            <li>involves redundant tasks</li>
+            <li>running multi-step yield loops by hand</li>
+            <li>juggling wallets and dApps</li>
+          </ul>
 
-  <div>
-    {#if $chains}
-      <label class="form-control w-full max-w-xs px-4">
-        <div class="label">
-          <span class="label-text">Contract address</span>
-        </div>
-        <div class="flex gap-2 items-center">
-          <input bind:value={input} class="input input-bordered" />
-          <button
-            class="btn btn-md"
-            on:click={() => {
-              query.set(input);
-            }}>Go</button
+          <h2 class="mb-3 text-3xl font-semibold">
+            Otopilot is a yield earning agent
+          </h2>
+          <ul class="list-disc ml-6 mb-6">
+            <li>manages a dedicated Safe smart account</li>
+            <li>finds yields on blue chip protocols</li>
+            <li>interacts with protocols to earn yields</li>
+          </ul>
+          <button class="btn btn-lg bg-accent text-neutral-content rounded-full"
+            >Connect wallet</button
           >
         </div>
-      </label>
-      {#if $addr && !($addr instanceof Error)}
-        <div class="p-4 w-full">
-          <p>
-            <span class="font-semibold">Contract address:</span>
-            {$addr.addr.toString()}
-          </p>
-          <p><span class="font-semibold">Chain:</span> {$addr.chain}</p>
-        </div>
-      {/if}
-      <div class="mb-4 card bordered">
-        <AbiView instance={page} {contract} {query} />
       </div>
-    {/if}
-  </div>
+    </div>
 
-  <footer
-    class="footer footer-center gap-4 bg-base-200 text-base-content items-center p-4 rounded-box"
-  >
-    <nav class="grid-flow-col place-self-center">
-      <a
-        href="https://github.com/okcontract"
-        target="_blank"
-        rel="noreferrer"
-        class=""><img src={GithubLogo} class="h-6 w-6" alt="Github" /></a
-      >
-    </nav>
-    <aside class="grid-flow-col items-center gap-2">
-      <p>
-        This library was built by the <a
-          href="https://okcontract.com"
-          target="_blank"
-          rel="noreferrer"
-          class="link link-primary">OKcontract</a
-        >
-        team with the support from the
-        <a
-          href="https://www.optimism.io/"
-          target="_blank"
-          rel="noreferrer"
-          class="link link-primary">Optimism</a
-        > RFG grant
-      </p>
-    </aside>
-  </footer>
-</main>
+    <footer class="footer footer-center gap-4 text-base-content items-center">
+      <nav class="grid-flow-col place-self-center"></nav>
+      <aside class="grid-flow-col items-center gap-2">
+        <p>
+          Built by <a
+            href="https://okcontract.com"
+            target="_blank"
+            rel="noreferrer"
+            class="link link-primary">OKcontract</a
+          > team
+        </p>
+      </aside>
+    </footer>
+  </main>
+</div>
